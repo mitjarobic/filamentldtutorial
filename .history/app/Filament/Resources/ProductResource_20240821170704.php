@@ -51,9 +51,6 @@ class ProductResource extends Resource
                     ]),
                 Select::make('category_id')
                     ->relationship('category', 'name'),
-                Select::make('tags')
-                    ->relationship('tags', 'name')
-                    ->multiple(),
             ]);
     }
 
@@ -75,7 +72,7 @@ class ProductResource extends Resource
                 //             ->orWhere('price', 'like', "%{$search}%");
                 //     })
                 TextColumn::make('status'),
-                TextColumn::make('category.name'),
+
             ])
             ->defaultSort('price', 'desc')
             ->filters([
@@ -95,7 +92,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\TagsRelationManager::class,
+            //
         ];
     }
 

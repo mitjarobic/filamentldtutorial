@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Tag;
 use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -37,4 +35,6 @@ class Product extends Model
     public function tags(): BelongsToMany {
         return $this->belongsToMany(Tag::class);
     }
+
+
 }

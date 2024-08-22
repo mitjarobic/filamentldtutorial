@@ -9,8 +9,6 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Support\RawJs;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,27 +31,10 @@ class ProductResource extends Resource
                     ->required()
                     ->mask(RawJs::make(<<<'JS'
                         $money($input, '.', '', 2)
-                    JS)),
+                    JS))
                     // ->placeholder('19.99')
                     // ->formatStateUsing(fn ($state) => ! $state ? null : number_format($state / 100, 2))
                     // ->dehydrateStateUsing(fn ($state) => (int) ($state * 100)),
-                Select::make('status')
-                    ->options([
-                        'in stock' => 'in stock',
-                        'sold out' => 'sold out',
-                        'coming soon' => 'coming soon',
-                    ]),
-                Radio::make('status')
-                    ->options([
-                        'in stock' => 'in stock',
-                        'sold out' => 'sold out',
-                        'coming soon' => 'coming soon',
-                    ]),
-                Select::make('category_id')
-                    ->relationship('category', 'name'),
-                Select::make('tags')
-                    ->relationship('tags', 'name')
-                    ->multiple(),
             ]);
     }
 
@@ -63,8 +44,7 @@ class ProductResource extends Resource
             ->columns([
                 TextColumn::make('name')->sortable()->searchable(isIndividual: true, isGlobal: true),
                 TextColumn::make('price')
-                    ->sortable()
-                    ->money('cad'),
+                    ->sortable()->money('usd'),
                     // ->getStateUsing(function (Product $record): float {
                     //     return $record->price / 100;
                     // }),
@@ -74,8 +54,7 @@ class ProductResource extends Resource
                 //             ->where('name', 'like', "%{$search}%")
                 //             ->orWhere('price', 'like', "%{$search}%");
                 //     })
-                TextColumn::make('status'),
-                TextColumn::make('category.name'),
+
             ])
             ->defaultSort('price', 'desc')
             ->filters([
@@ -95,7 +74,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\TagsRelationManager::class,
+            //
         ];
     }
 

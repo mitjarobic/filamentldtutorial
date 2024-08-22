@@ -9,7 +9,6 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Support\RawJs;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
@@ -43,17 +42,6 @@ class ProductResource extends Resource
                         'sold out' => 'sold out',
                         'coming soon' => 'coming soon',
                     ]),
-                Radio::make('status')
-                    ->options([
-                        'in stock' => 'in stock',
-                        'sold out' => 'sold out',
-                        'coming soon' => 'coming soon',
-                    ]),
-                Select::make('category_id')
-                    ->relationship('category', 'name'),
-                Select::make('tags')
-                    ->relationship('tags', 'name')
-                    ->multiple(),
             ]);
     }
 
@@ -75,7 +63,7 @@ class ProductResource extends Resource
                 //             ->orWhere('price', 'like', "%{$search}%");
                 //     })
                 TextColumn::make('status'),
-                TextColumn::make('category.name'),
+
             ])
             ->defaultSort('price', 'desc')
             ->filters([
@@ -95,7 +83,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\TagsRelationManager::class,
+            //
         ];
     }
 
